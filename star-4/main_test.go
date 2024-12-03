@@ -16,14 +16,14 @@ func TestRun(t *testing.T) {
 		wantErr    error
 	}{
 		{
-			name:       "Star 1 example input",
+			name:       "Star 4 example input",
 			args:       []string{tempFile(t, example)},
-			wantStdout: "11\n",
+			wantStdout: "4\n",
 		},
 		{
-			name:       "Star 1 real input",
+			name:       "Star 4 real input",
 			args:       []string{"input.txt"},
-			wantStdout: "1830467\n",
+			wantStdout: "700\n",
 		},
 	}
 	for _, tt := range tests {
@@ -42,12 +42,12 @@ func TestRun(t *testing.T) {
 }
 
 var example = `
-3   4
-4   3
-2   5
-1   3
-3   9
-3   3
+7 6 4 2 1
+1 2 7 8 9
+9 7 6 2 1
+1 3 2 4 5
+8 6 4 4 1
+1 3 6 7 9
 `
 
 func tempFile(t *testing.T, contents string) (file string) {

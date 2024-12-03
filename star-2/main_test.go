@@ -17,7 +17,7 @@ func TestRun(t *testing.T) {
 	}{
 		{
 			name:       "Star 2 example input",
-			args:       []string{tempFile(t, star1Example)},
+			args:       []string{tempFile(t, example)},
 			wantStdout: "31\n",
 		},
 		{
@@ -41,7 +41,7 @@ func TestRun(t *testing.T) {
 	}
 }
 
-var star1Example = `
+var example = `
 3   4
 4   3
 2   5
