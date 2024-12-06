@@ -30,17 +30,9 @@ func run(stdout io.Writer, args []string) error {
 
 func findXmasOccurrencesCount(g grid) int {
 	var result int
-	for row, column := range g.all() {
-		for rowOffset, columnOffset := range neighbourCellOffsets(g, row, column) {
-			if occurs(
-				g,
-				row,
-				column,
-				rowOffset,
-				columnOffset,
-				xmasRunes,
-				0,
-			) {
+	for row := 1; row < g.rowCount()-1; row++ {
+		for column := 1; column < g.columnCount()-1; column++ {
+			if isAnXmas(g, row, column) {
 				result++
 			}
 		}
@@ -48,37 +40,22 @@ func findXmasOccurrencesCount(g grid) int {
 	return result
 }
 
-var xmasRunes = []rune("XMAS")
-
-func occurs(g grid, row, column, rowOffset, columnOffset int, needle []rune, index int) bool {
-	for r, c, i := row, column, index; //
-	i < len(xmasRunes);                //
-	r, c, i = r+rowOffset, c+columnOffset, i+1 {
-		if !g.has(r, c) || g.at(r, c) != needle[i] {
-			return false
-		}
+func isAnXmas(g grid, row, column int) bool {
+	if g.at(row, column) != 'A' {
+		return false
 	}
-	return true
-}
 
-func neighbourCellOffsets(g grid, row, column int) iter.Seq2[int, int] {
-	return func(yield func(row int, column int) bool) {
-		for rowOffset := -1; rowOffset <= 1; rowOffset++ {
-			for columnOffset := -1; columnOffset <= 1; columnOffset++ {
-				if rowOffset == 0 && columnOffset == 0 {
-					continue
-				}
-
-				if !g.has(row+rowOffset, column+columnOffset) {
-					continue
-				}
-
-				if !yield(rowOffset, columnOffset) {
-					return
-				}
-			}
-		}
+	areDiagonalsEqualTo := func(topLeft, topRight, bottomLeft, bottomRight rune) bool {
+		return g.at(row-1, column-1) == topLeft &&
+			g.at(row-1, column+1) == topRight &&
+			g.at(row+1, column-1) == bottomLeft &&
+			g.at(row+1, column+1) == bottomRight
 	}
+
+	return areDiagonalsEqualTo('M', 'M', 'S', 'S') ||
+		areDiagonalsEqualTo('M', 'S', 'M', 'S') ||
+		areDiagonalsEqualTo('S', 'S', 'M', 'M') ||
+		areDiagonalsEqualTo('S', 'M', 'S', 'M')
 }
 
 type grid struct {
@@ -116,6 +93,14 @@ func (g *grid) all() iter.Seq2[int, int] {
 			}
 		}
 	}
+}
+
+func (g *grid) rowCount() int {
+	return len(g.g)
+}
+
+func (g *grid) columnCount() int {
+	return len(g.g[0])
 }
 
 func fmap[I, O any](values []I, f func(value I) O) []O {
