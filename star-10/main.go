@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"slices"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -75,17 +76,52 @@ func isValidSubTopologicalOrdering(ordering []string, rules *graph) bool {
 }
 
 func fix(ordering []string, rules *graph) []string {
-	subGraph := newGraph()
-	for source := range rules.nodes() {
-		if slices.Contains(ordering, source) {
-			for target := range rules.successors(source).all() {
-				if slices.Contains(ordering, target) {
-					subGraph.putEdge(source, target)
-				}
+	// Valid solution 1
+	//subGraph := newGraph()
+	//for source := range rules.nodes() {
+	//	if slices.Contains(ordering, source) {
+	//		for target := range rules.successors(source).all() {
+	//			if slices.Contains(ordering, target) {
+	//				subGraph.putEdge(source, target)
+	//			}
+	//		}
+	//	}
+	//}
+	//return topologicalOrdering(subGraph)
+
+	// Valid solution 2
+	ordering = slices.Clone(ordering)
+	sort.Sort(&byRules{
+		ordering: ordering,
+		rules:    rules,
+	})
+	return ordering
+}
+
+type byRules struct {
+	ordering []string
+	rules    *graph
+}
+
+func (b *byRules) Len() int {
+	return len(b.ordering)
+}
+
+func (b *byRules) Less(i, j int) bool {
+	first := b.ordering[i]
+	second := b.ordering[j]
+	for source := range b.rules.nodes() {
+		for target := range b.rules.successors(source).all() {
+			if first == source && second == target {
+				return true
 			}
 		}
 	}
-	return topologicalOrdering(subGraph)
+	return false
+}
+
+func (b *byRules) Swap(i, j int) {
+	b.ordering[i], b.ordering[j] = b.ordering[j], b.ordering[i]
 }
 
 func topologicalOrdering(g *graph) []string {
