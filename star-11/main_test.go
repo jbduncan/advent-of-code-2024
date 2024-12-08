@@ -16,32 +16,32 @@ func TestRun(t *testing.T) {
 		wantErr    error
 	}{
 		{
-			name:       "Star 10 example input 1",
+			name:       "Star 9 example input 1",
 			args:       []string{tempFile(t, example1)},
 			wantStdout: "0\n",
 		},
 		{
-			name:       "Star 10 example input 2",
+			name:       "Star 9 example input 2",
 			args:       []string{tempFile(t, example2)},
 			wantStdout: "47\n",
 		},
 		{
-			name:       "Star 10 example input 3",
+			name:       "Star 9 example input 3",
 			args:       []string{tempFile(t, example3)},
 			wantStdout: "29\n",
 		},
 		{
-			name:       "Star 10 example input 4",
+			name:       "Star 9 example input 4",
 			args:       []string{tempFile(t, example4)},
 			wantStdout: "47\n",
 		},
 		{
-			name:       "Star 10 example input 5",
+			name:       "Star 9 example input 5",
 			args:       []string{tempFile(t, example5)},
 			wantStdout: "123\n",
 		},
 		{
-			name:       "Star 10 real input",
+			name:       "Star 9 real input",
 			args:       []string{"input.txt"},
 			wantStdout: "4743\n",
 		},
