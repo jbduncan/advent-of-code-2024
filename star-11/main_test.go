@@ -16,34 +16,14 @@ func TestRun(t *testing.T) {
 		wantErr    error
 	}{
 		{
-			name:       "Star 9 example input 1",
-			args:       []string{tempFile(t, example1)},
-			wantStdout: "0\n",
+			name:       "Star 11 example input",
+			args:       []string{tempFile(t, example)},
+			wantStdout: "41\n",
 		},
 		{
-			name:       "Star 9 example input 2",
-			args:       []string{tempFile(t, example2)},
-			wantStdout: "47\n",
-		},
-		{
-			name:       "Star 9 example input 3",
-			args:       []string{tempFile(t, example3)},
-			wantStdout: "29\n",
-		},
-		{
-			name:       "Star 9 example input 4",
-			args:       []string{tempFile(t, example4)},
-			wantStdout: "47\n",
-		},
-		{
-			name:       "Star 9 example input 5",
-			args:       []string{tempFile(t, example5)},
-			wantStdout: "123\n",
-		},
-		{
-			name:       "Star 9 real input",
+			name:       "Star 11 real input",
 			args:       []string{"input.txt"},
-			wantStdout: "4743\n",
+			wantStdout: "4752\n",
 		},
 	}
 	for _, tt := range tests {
@@ -61,139 +41,17 @@ func TestRun(t *testing.T) {
 	}
 }
 
-var example1 = `
-47|53
-97|13
-97|61
-97|47
-75|29
-61|13
-75|53
-29|13
-97|29
-53|29
-61|53
-97|53
-61|29
-47|13
-75|47
-97|75
-47|61
-75|61
-47|29
-75|13
-53|13
-
-75,47,61,53,29
-`
-
-var example2 = `
-47|53
-97|13
-97|61
-97|47
-75|29
-61|13
-75|53
-29|13
-97|29
-53|29
-61|53
-97|53
-61|29
-47|13
-75|47
-97|75
-47|61
-75|61
-47|29
-75|13
-53|13
-
-75,97,47,61,53
-`
-
-var example3 = `
-47|53
-97|13
-97|61
-97|47
-75|29
-61|13
-75|53
-29|13
-97|29
-53|29
-61|53
-97|53
-61|29
-47|13
-75|47
-97|75
-47|61
-75|61
-47|29
-75|13
-53|13
-
-61,13,29
-`
-
-var example4 = `
-47|53
-97|13
-97|61
-97|47
-75|29
-61|13
-75|53
-29|13
-97|29
-53|29
-61|53
-97|53
-61|29
-47|13
-75|47
-97|75
-47|61
-75|61
-47|29
-75|13
-53|13
-
-97,13,75,29,47
-`
-
-var example5 = `
-47|53
-97|13
-97|61
-97|47
-75|29
-61|13
-75|53
-29|13
-97|29
-53|29
-61|53
-97|53
-61|29
-47|13
-75|47
-97|75
-47|61
-75|61
-47|29
-75|13
-53|13
-
-75,47,61,53,29
-97,61,53,29,13
-75,29,13
-75,97,47,61,53
-61,13,29
-97,13,75,29,47
+var example = `
+....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...
 `
 
 func tempFile(t *testing.T, contents string) (file string) {

@@ -64,7 +64,7 @@ type grid struct {
 
 func makeGrid(s string) grid {
 	return grid{
-		g: fmap(strings.Split(s, "\n"), runes),
+		g: mapSlice(strings.Split(s, "\n"), runes),
 	}
 }
 
@@ -103,7 +103,7 @@ func (g *grid) columnCount() int {
 	return len(g.g[0])
 }
 
-func fmap[I, O any](values []I, f func(value I) O) []O {
+func mapSlice[I, O any](values []I, f func(value I) O) []O {
 	var result []O
 	for _, value := range values {
 		result = append(result, f(value))
