@@ -167,30 +167,19 @@ func (m *guardStateMachine) run() int {
 		if c == nil {
 			return visitedCells.len()
 		}
-		nextValue := m.g.at((*c).row, (*c).column)
+		next := m.g.at((*c).row, (*c).column)
 		switch {
-		case nextValue == '.' || nextValue == '^':
-			current := cell{
-				row:    m.position.row,
-				column: m.position.column,
-			}
-			visitedCells.add(current)
+		case next == '.' || next == '^':
+			visitedCells.add(m.position)
 			m.move()
 			continue
-		case nextValue == '#':
+		case next == '#':
 			m.d = m.d.turnRight()
 			continue
 		default:
 			panic("unexpected")
 		}
 	}
-}
-
-func (m *guardStateMachine) next() *rune {
-	if c := m.nextCell(); c != nil {
-		return ptr(m.g.at(c.row, c.column))
-	}
-	return nil
 }
 
 func (m *guardStateMachine) move() {
